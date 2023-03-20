@@ -1,6 +1,6 @@
 #include "App.h"
 #include "json.hpp"
-#include <glog/logging.h.in>
+#include <glog/logging.h>
 
 using namespace std;
 using namespace restbed;
