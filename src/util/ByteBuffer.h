@@ -15,7 +15,7 @@ class ByteBuffer
 public:
     typedef long Index;
 
-    /* why? */
+    /* FIXME? C++11允许我们使用=default来要求编译器生成一个默认构造函数 */
     ByteBuffer() = default;
 
     ByteBuffer(void *data, size_t size);
@@ -23,7 +23,7 @@ public:
     /**
      * 将字节vector转换为字节缓冲区
     */
-    /* why? onst std::vector<Byte> &buffer是地址不能变还是地址指向的值不能变？ */
+    /* FIXME? onst std::vector<Byte> &buffer是地址不能变还是地址指向的值不能变？ */
     ByteBuffer(const std::vector<Byte> &buffer);
 
     /**
@@ -36,13 +36,13 @@ public:
      */
     static ByteBuffer hex(const std::string &str);
 
-    /* why? */
+    /* FIXME? */
     ByteBuffer &operator=(const std::vector<Byte> &buffer);
 
     /**
      * 返回当前缓冲区大小
     */
-    /* why? */
+    /* FIXME? */
     size_t size() const;
 
     /**
@@ -53,7 +53,7 @@ public:
     /**
      * 在缓冲区末尾插入一段连续内存
     */
-    /* why?为什么要在方法名前加&;  void const*和const void*的区别 */
+    /* FIXME?为什么要在方法名前加&;  void const*和const void*的区别 */
     ByteBuffer &push_back(void const *data, size_t size);
 
     /**
@@ -71,13 +71,13 @@ public:
      * @param buffer 下标，为负即从尾部取
      * @return 返回新的缓冲区
     */
-    /* why? 方法后的const的作用；operator+是重载运算符吗？*/
+    /* FIXME? 方法后的const的作用；operator+是重载运算符吗？*/
     ByteBuffer operator+(const ByteBuffer &buffer) const;
 
     /**
      * 取缓冲区一个字节
     */
-    /* why? */
+    /* FIXME? */
     Byte &operator[](Index idx);
     Byte operator[](Index idx) const;
 
@@ -97,7 +97,7 @@ public:
      * 返回缓冲区数据首指针
      * 使用时应该结合ByteBuffer::size返回的尺寸
     */
-    /* why? */
+    /* FIXME? */
     Byte const *data() const;
 
     /**
@@ -137,10 +137,10 @@ public:
     */
     ByteBuffer &clear();
 
-    /* why? */
+    /* FIXME? */
     friend bool operator==(const ByteBuffer &, const ByteBuffer &);
 
-    /* why? */
+    /* FIXME? */
     friend std::ostream &operator<<(std::ostream &, const ByteBuffer &);
 
     ~ByteBuffer() = default;
@@ -156,7 +156,7 @@ public:
     /**
      * 向字节缓冲区中写入对象数据
     */
-    /* why? vitual表明是接口？ const=0的作用？*/
+    /* FIXME? vitual表明是接口？ const=0的作用？*/
     virtual ByteBuffer &writeBuffer(ByteBuffer &buffer) const = 0;
 }
 
