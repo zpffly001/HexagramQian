@@ -1,6 +1,8 @@
 #ifndef HEXAGRAMQIAN_TYPES_H
 #define HEXAGRAMQIAN_TYPES_H
 
+#include "util/Byte.h"
+#include "util/Int.h"
 
 /**
  * 所有类型的定义
@@ -26,8 +28,6 @@ typedef unsigned int UInt;
  * 无符号64位整数
 */
 typedef unsigned long long ULong;
-
-
 
 
 #endif
