@@ -84,23 +84,66 @@ public:
         HuffmanTree(std::array<UInt32, size_t(256)> count);
 
         void creatHuffman(std::array<UInt32, size_t(256)> count);
-        
-
-        
     };
     
+    class BitBuffer
+    {
+    public:
+        std::vector<Bit> bits;
 
+        ByteBuffer toByteBuffer(Huffman::BitBuffer &longbuffer);
+
+        void addBit(Bit);
+
+        void delBit();
+
+        void pushBitBuffer(BitBuffer buffer);
+
+        void clear();
+
+        /**
+         * 默认构造函数
+        */
+        BitBuffer();
+
+        /**
+         * 转换构造函数
+        */
+        BitBuffer(ByteBuffer);
+    };
     
+private:
+
+    /* 根据原始数据统计频数（字典）*/
+    static std::array<UInt32, size_t(256)> doFrequency(const std::vector<ByteBuffer> &data);
     
+    /* 把统计数据（字典）转换成二进制ByteBuffer */
+    static ByteBuffer toDictionaryByte(const std::array<UInt32, size_t(256)> &count);
+
+    /* 把二进制ByteBuffer转换为统计数据（字典） */
+    static std::array<UInt32, size_t(256)> fromDictionaryByte(const ByteBuffer &dictionary);
+
+    /* 把包含4个Byte的ByteBuffer转化为UInt32 */
+    static UInt32 fromByteBuffer(const ByteBuffer &UInt32_buffer, size_t start);
+
+    /* 把Huffman树转换为编码字典 */
+    static void toCodeMap(HuffmanTree huffman_tree, std::array<BitBuffer, size_t(256)> &, BitBuffer &longbuffer);
+
+    static void toCodeMap(HuffmanTree huffman_tree, std::array<BitBuffer, size_t(256)> &);
+
+    /* 递归遍历Huffman树，创建编码字典 */
+    static void creatCodeMap(HuffmanTree::Node *node, std::array<BitBuffer, size_t(256)> &arr, BitBuffer &nowmap);
+    
+    /* 根据压缩字典、原文，创建压缩后的文本 */
+    static void compress_private(const std::array<BitBuffer, size_t(256)> &codemap,
+                                const std::vector<ByteBuffer> &ori_text,
+                                std::vector<ByteBuffer> &compress_text,
+                                BitBuffer &longbuffer);
+
+    /* 根据Huffman树、原文，创建解压后的文本 */
+    static void decompress_private(HuffmanTree huffman_tree, 
+                                  const ByteBuffer &ori_text,
+                                  ByteBuffer &decompress_text);
 };
-
-Huffman::Huffman(/* args */)
-{
-}
-
-Huffman::~Huffman()
-{
-}
-
 
 #endif
