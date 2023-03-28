@@ -19,3 +19,11 @@ cmake.. && make
 # https://blog.csdn.net/weixin_39445116/article/details/116767026
 mkdir build && cd build
 cmake.. && make
+
+
+
+
+# static void toCodeMap(HuffmanTree huffman_tree, std::array<BitBuffer, size_t(256)> &);
+# 引用传递的参数，在函数定义时可以省略参数名称，只保留引用符号&。
+# 这是因为引用是一个别名，它指向传递给函数的实参，因此函数内部可以直接使用它，而不需要复制参数的值。
+# 这也提高了程序的效率，因为引用传递避免了参数值的复制。
