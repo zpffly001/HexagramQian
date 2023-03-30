@@ -15,7 +15,10 @@ Huffman::Result Huffman::compress(const std::vector<ByteBuffer> &data)
     std::array<UInt32, size_t(256)> count = doFrequency(data);
     /* 根据频率建立Huffman树 */
     HuffmanTree huffman_tree(count);
+    /* 根据Huffman树建立压缩字典 */
+    toCodeMap(huffman_tree, codemap, longbuffer);
 
+    compress_private(codemap, data, compress_text, longbuffer);
 }
 
 Huffman::HuffmanTree::Node::Node(UInt32 len, Node *le, Node *ri, Byte val) : weight(len), left(le), right(ri),
@@ -85,4 +88,47 @@ std::array<UInt32, size_t(256)> Huffman::doFrequency(const std::vector<ByteBuffe
         }
     }
     return count;
+}
+
+void Huffman::toCodeMap(HuffmanTree huffman_tree, std::array<BitBuffer, size_t(256)> &codemap, BitBuffer &longbuffer)
+{
+    BitBuffer nowmap;
+    creatCodeMap(huffman_tree.root, codemap, nowmap);
+    for (size_t i = 0; i < 256; i++)
+    {
+        if (codemap.at(i).bits.size() >= 8)
+        {
+            /* 寻找大于等于8Bit的huffman编码，作为哨兵项 */
+            longbuffer = codemap.at(i);
+            break;
+        }
+    }
+}
+
+/**
+ * 递归函数，通过遍历huffman树的所有节点形成压缩字典
+*/
+void Huffman::creatCodeMap(HuffmanTree::Node *node, std::array<BitBuffer, size_t(256)> &arr, BitBuffer &nowmap)
+{
+    size_t index;
+    if (node == nullptr)
+    {
+        return;
+    }
+    if (node->isLeaf())
+    {
+        index = size_t((unsigned char) (node->value));
+        /* 找到叶节点，则将该叶节点对应的Byte的编码表写入 */
+        arr.at(index) = nowmap;
+        return;
+    }
+    nowmap.addBit(0);
+    creatCodeMap(node->left, arr, nowmap);
+    /* 回溯 */
+    nowmap.delBit();
+    
+    nowmap.addBit(1);
+    creatCodeMap(node->right, arr, nowmap);
+    /* 回溯 */
+    nowmap.delBit();
 }
