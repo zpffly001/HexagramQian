@@ -166,7 +166,7 @@ public:
      * 获得某个数据快的解压数据
      * @param idx 数据块id，为0则返回原数据块内容
     */
-    ByteBuffer getDecomposeDataBlock(DataBlockIndex idx) const;
+    ByteBuffer getDecomposedDataBlock(DataBlockIndex idx) const;
 
     /**
      * 获得所有解压后的数据块
