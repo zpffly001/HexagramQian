@@ -5,7 +5,7 @@
  * 将字符串按自然段分割
  * 若按 '\n' 分割出现空字符串，则不包含在结果中
  */
-std::vector<ByteBuffer> splitParagraph(const std::string &str)
+std::vector<ByteBuffer> StringUtil::splitParagraph(const std::string &str)
 {
     std::vector<ByteBuffer> output;
     size_t first = 0;
@@ -35,7 +35,7 @@ std::vector<ByteBuffer> splitParagraph(const std::string &str)
  * 字符串分割
  * Code from: http://quick-bench.com/mhyUI8Swxu3As-RafVUSVfEZd64
  */
-std::vector<std::string> split(const std::string &str, const std::string &delims)
+std::vector<std::string> StringUtil::split(const std::string &str, const std::string &delims = " ")
 {
     std::vector<std::string> output;
     size_t first = 0;
