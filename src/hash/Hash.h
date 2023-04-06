@@ -1,5 +1,5 @@
-#ifndef NEWS_BLOCKCHAIN_HASH_H
-#define NEWS_BLOCKCHAIN_HASH_H
+#ifndef HEXAGRAMQIAN_HASH_H
+#define HEXAGRAMQIAN_HASH_H
 
 #include "IHashFunc.h"
 #include <string>

@@ -1,5 +1,5 @@
-#ifndef NEWS_BLOCKCHAIN_IHASHFUNC_H
-#define NEWS_BLOCKCHAIN_IHASHFUNC_H
+#ifndef HEXAGRAMQIAN_IHASHFUNC_H
+#define HEXAGRAMQIAN_IHASHFUNC_H
 
 #include <util/Int.h>
 #include <util/ByteBuffer.h>

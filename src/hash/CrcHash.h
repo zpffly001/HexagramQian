@@ -1,5 +1,5 @@
-#ifndef NEWS_BLOCKCHAIN_CRCHASH_H
-#define NEWS_BLOCKCHAIN_CRCHASH_H
+#ifndef HEXAGRAMQIAN_CRCHASH_H
+#define HEXAGRAMQIAN_CRCHASH_H
 
 #include "IHashFunc.h"
 //#include <string>
