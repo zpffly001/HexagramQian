@@ -36,3 +36,59 @@ void StaticController::indexHandler(const std::shared_ptr<restbed::Session> sess
 
     session->close(FOUND, "", headeres);
 }
+
+/**
+ * 静态资源获取处理
+*/
+void StaticController::staticHandler(const std::shared_ptr<restbed::Session> session)
+{
+    const auto request = session->get_request();
+    string filename = request->get_path_parameter("filename");
+
+    /* 简单防止路径穿透 */
+    /* find函数在找不到指定值得情况下会返回string::npos */
+    if (filename.find("..") != string::npos)
+    {
+        session->close(BAD_REQUEST);
+        return;
+    }
+
+    /* 匹配 MIME */
+    std::string mime;
+    if (StringUtil::endsWith(filename, ".html"))
+    {
+        mime = "text/html";
+    }else if(StringUtil::endsWith(filename, ".js")){
+        mime = "application/x-javascript";
+        filename = "js/" + filename;
+    }else if (StringUtil::endsWith(filename, ".css"))
+    {
+        mime = "text/css";
+        filename = "css/" + filename;
+    }else if (StringUtil::endsWith(filename, ".hbs"))
+    {
+        mime = "text/plain";
+        filename = "templates/" + filename;
+    }else{
+        mime = "text/plain";
+    }
+
+    /* 打开文件 */
+    ifstream stream("./static/" + filename, ifstream::in);
+    if (stream.is_open())
+    {
+        const string body = string(istreambuf_iterator<char>(stream), istreambuf_iterator<char>());
+        const multimap<string, string> headers{
+            {"Content-Type", mime},
+            {"Content-Length", ::to_string(body.length())}
+        };
+        /* 返回网页、关闭session */
+        session->close(OK, body, headers);
+    } else{
+        LOG(INFO) << "Cannot find static file: " << filename;
+        session->close(NOT_FOUND);
+    }
+    
+    
+    
+}
