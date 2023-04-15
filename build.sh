@@ -4,7 +4,7 @@ git submodule add -f https://github.com/google/googletest.git externals/googlete
 git submodule add -f https://github.com/Corvusoft/restbed.git externals/restbed
 git submodule add -f https://github.com/google/glog.git externals/glog
 
-# 删除git子模块
+# 删除子模块
 rm -rf externals/CMake-codecov
 git rm --cached externals/CMake-codecov
 
