@@ -10,7 +10,7 @@ class App
 {
     int port;
 
-    restbed::Service server;
+    restbed::Service service;
     std::shared_ptr<restbed::Settings> settings;
 
     void prepareSettings();
@@ -25,6 +25,10 @@ public:
     */
     explicit App(int port) : port(port) {}
 
+    /**
+     * 初始化App
+    */
+    void initialize();
     /**
      * 启动APP
     */
